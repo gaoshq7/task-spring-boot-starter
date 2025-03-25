@@ -40,6 +40,8 @@ public class StageEndAction extends AbstractActuatorAction {
         } catch (Exception e) {
             log.error("结束任务步骤'{}'信息推送失败: ", stage.getName(), e);
             throw new LiteFlowException("结束任务步骤'" + stage.getName() + "'信息推送失败，请查看日志！");
+        }finally {
+            TaskContext.clear();
         }
     }
 

@@ -23,7 +23,10 @@ public class StageBeginAction extends AbstractActuatorAction {
         // 向外部接口发送步骤开始消息
         String currentStage = this.getContextBean(CalculateContext.class).getCurrentStage();
         try {
-            transport.start(TSStartInfo.build(this.getContextBean(CalculateContext.class).getId(), currentStage));
+            String taskId = this.getContextBean(CalculateContext.class).getId();
+            TaskContext.set(taskId,currentStage);
+
+            transport.start(TSStartInfo.build(taskId, currentStage));
         } catch (Exception e) {
             log.error("启动任务步骤'{}'信息推送失败: ", currentStage, e);
             throw new LiteFlowException("启动任务步骤'" + currentStage + "'信息推送失败，请查看日志！");
